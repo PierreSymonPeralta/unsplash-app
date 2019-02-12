@@ -4,7 +4,7 @@ import './App.scss';
 
 import { UserPage, HomePage, AboutPage } from './containers';
 import { NavBar } from './components';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 
 const App =  () => (
   <Router>
