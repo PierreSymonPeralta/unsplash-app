@@ -1,0 +1,39 @@
+@import '../../style/shared';
+
+.search-input{
+  width: 100%;
+  margin-top: 2em;
+  margin-bottom: 1.5em;
+
+  font-size: 1.2em;
+  background-color: $white;
+  border-radius: 6px 6px 6px 6px;
+  color: $gray;
+
+  display: flex;
+  align-content: space-between;
+
+  button, input{
+    padding: 1.5rem;
+    border: none;
+  }
+
+  button{
+    background: transparent;
+    cursor: pointer;
+    fill: $gray;
+  }
+  button:focus{
+    outline: none;
+  }
+  button:hover{
+    fill: $darkgray;
+  }
+
+  input{
+    width: 90%;
+  }
+  input:focus{
+    outline: none;
+  }
+}

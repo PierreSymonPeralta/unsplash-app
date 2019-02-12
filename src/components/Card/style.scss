@@ -1,0 +1,67 @@
+@import '../../style/shared';
+
+
+.card{
+  position: relative;
+  margin: 0.5em;
+  .card__overlay{
+    will-change: opacity;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    &::before{
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background: rgba(136, 136, 136, 0.5);
+    }
+    .card__overlay__content{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      color: $white;
+      display: flex;
+      flex-flow: column;
+      justify-content: space-between;
+      & div{
+        padding: 1em;
+      }
+      .top__section{
+        text-align: end;
+        .pill{
+          display: inline-block;
+          border-radius: 3px;
+          padding: 0.3em;
+          background-color: $white;
+          color: $darkgray;
+          margin-left: 0.5em;
+          cursor: pointer;
+          &:hover{
+            background-color: $bgwhite;
+          }
+        }
+        .red{
+          color: red;
+        }
+      }
+      .bottom__section{
+        .user{
+          display: flex;
+          align-items: center;
+          img{
+            border-radius: 50%;
+            margin-right: 0.5em;
+          }
+        }
+      }
+    }
+  }
+}

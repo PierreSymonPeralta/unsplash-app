@@ -1,0 +1,35 @@
+@import '../../style/shared';
+
+.navbar{
+  width: 100%;
+  margin: 0;
+  background-color: $white;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0,0,0,.15);
+
+  & img{
+    margin: 0.4em 3em;
+  }
+
+  & ul {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    li {
+      a {
+        display: inline-block;
+        padding: 1.2em;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: bold;
+        color: $darkgray;
+        &:hover{
+          color: $white;
+          background-color:$darkgray;
+        }
+      }
+    }
+    
+  }
+}

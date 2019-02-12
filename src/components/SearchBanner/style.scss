@@ -1,0 +1,34 @@
+@import '../../style/shared';
+
+
+.search-banner{
+  width: 100%;
+  height: 600px;
+  background-position: center;
+  background-size: cover;
+
+  margin-bottom: 3em;
+  color: $white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .search-banner__content{
+    width: 80%;
+  }
+  & *{
+    display: block;
+  }
+
+  .title{
+    font-size: 3.5em;
+    line-height: 1.5em;
+    font-weight: bold;
+  }
+  .description{
+    font-size: 1.5em;
+    line-height: 1.5em;
+    font-weight: bold;
+  }
+}

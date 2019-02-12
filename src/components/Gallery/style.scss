@@ -1,0 +1,14 @@
+@import '../../style/shared';
+
+
+.gallery{
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .gallery__column{
+    display: flex;
+    flex-flow: column;
+  }
+}
