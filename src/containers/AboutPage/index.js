@@ -36,7 +36,6 @@ class AboutPage extends Component {
     console.log('Page -> Render');
     return (
       <div className="container"> 
-        <h2>About Page</h2>
         <TestComponent data={this.state.name} />
         <button onClick={this.setName.bind(this)}>Set Name</button>
         <button onClick={this.setOthers.bind(this)}>Set Other</button>

@@ -24,7 +24,6 @@ class UserPage extends Component {
     return (
       <div className="container"> 
         <Dialog open={this.state.openDialog}/>
-        <h2>User Page</h2>
         { this.state.users.length > 0 &&
           this.state.users.map(user=> {
               return <UserInfo key={user.id} user={user} onClick={this.handleUserClickInfo.bind(this, user)}/>

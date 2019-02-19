@@ -1,19 +1,36 @@
 @import '../../style/shared';
 
 .navbar{
+  position: fixed;
+  top: 0;
   width: 100%;
-  margin: 0;
+  z-index: 10;
   background-color: $white;
+  box-shadow: 0 2px 10px rgba(0,0,0,.15);
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 2px 10px rgba(0,0,0,.15);
 
-  & img{
-    margin: 0.4em 3em;
+  .navbar__logo{ 
+    margin: 0.4em 3em 
   }
 
-  & ul {
+  .navbar__menu{
+    position: fixed;
+    top: 0.8em;
+    left: 0.8em;
+    padding: 1.3em;
+    background: url(../../assets/arrow-down.svg) no-repeat center;
+    border: none;
+    background-color: $white;
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    border-radius: 3px;
+    outline: none;
+    display: none;
+  }
+
+  ul {
     margin: 0;
+    padding: 0;
     list-style: none;
     display: flex;
     li {
@@ -30,6 +47,44 @@
         }
       }
     }
-    
   }
 }
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .navbar{
+    .navbar__logo{ 
+      display: none;
+    }
+    .navbar__menu{
+      transition: transform 0.4s cubic-bezier(0,0,0.3,1);
+      display: block;
+    }
+    ul{
+      position: absolute;
+      transform: translateY(-102%);
+      display: block;
+      width: 100%;
+      background-color: $white;
+      transition: transform 0.3s cubic-bezier(0,0,0.3,1);
+      will-change: transform;
+      * {
+        width: 100%;
+      }
+    }
+  }
+}
+
+
+.navbar--visible{
+  .navbar__menu{
+    transform: translateY(-102%);
+  }
+  ul{
+    transform: none;
+  }
+} 

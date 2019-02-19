@@ -6,38 +6,37 @@ import './style.scss';
 class NavBar extends React.Component {
   constructor(){
     super();
-    this.state ={
-      favorites: []
-    }
+    this.state = {
+      showNavbar: false
+    };
+    this.onMenuClick = this.onMenuClick.bind(this);
   }
   
   render() {
     return (
-    <nav className="navbar">
-      <a href="/">
-        <img src={Logo} alt="Logo here" width="50" height="40">
-      </img>
-      </a>
-      <ul>
-        <li>
-          <Link to="/">Home Page</Link>
-        </li>
-        <li>
-          <Link to="/users">User Page</Link>
-        </li>
-        <li>
-          <Link to="/about">About Page</Link>
-        </li>
-        <li>
-          <Link to="/">Favorites</Link>
-        </li>
+    <div className="navbar">
+      <button className="navbar__menu" onClick={this.onMenuClick}></button>
+      <div className="navbar__logo">
+        <Link to="/">
+          <img src={Logo} alt="Logo here" width="50" height="40"/>
+        </Link>
+      </div> 
+      <ul onClick={this.onMenuClick}>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/users">Users</Link></li>
+        <li><Link to="/about">Collections</Link></li>
+        <li><Link to="/">Favorites</Link></li>
       </ul>
-    </nav>
+    </div>
     )
+  }
+
+  // ******** CUSTOM METHODS *********** //
+
+  onMenuClick(){
+    const navBar = document.querySelector('.navbar');
+    navBar.classList.toggle('navbar--visible');
   }
 }
   
-
-
-
 export default NavBar;

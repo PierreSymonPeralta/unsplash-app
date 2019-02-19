@@ -4,7 +4,6 @@
   width: 100%;
   margin-top: 2em;
   margin-bottom: 1.5em;
-
   font-size: 1.2em;
   background-color: $white;
   border-radius: 6px 6px 6px 6px;
@@ -14,6 +13,7 @@
   align-content: space-between;
 
   button, input{
+    border-radius: 6px 6px 6px 6px;
     padding: 1.5rem;
     border: none;
   }
@@ -29,11 +29,27 @@
   button:hover{
     fill: $darkgray;
   }
-
   input{
     width: 90%;
   }
   input:focus{
     outline: none;
+  }
+}
+
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .search-input{
+    button, input{
+      padding: 0.5em;
+    }
+    button{
+      transform: scale(0.6);
+    }
   }
 }
