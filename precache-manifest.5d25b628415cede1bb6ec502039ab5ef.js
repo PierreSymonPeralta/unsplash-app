@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/unsplash-app/static/js/runtime~main.c89c8ab2.js"
   },
   {
-    "revision": "548c55c1f3aca01cbbbb",
-    "url": "/unsplash-app/static/js/main.548c55c1.chunk.js"
+    "revision": "6e73f15ae41f649e6349",
+    "url": "/unsplash-app/static/js/main.6e73f15a.chunk.js"
   },
   {
     "revision": "afec382a882e7acc561b",
     "url": "/unsplash-app/static/js/1.afec382a.chunk.js"
   },
   {
-    "revision": "548c55c1f3aca01cbbbb",
-    "url": "/unsplash-app/static/css/main.11eb8d11.chunk.css"
+    "revision": "6e73f15ae41f649e6349",
+    "url": "/unsplash-app/static/css/main.fe8463bc.chunk.css"
   },
   {
-    "revision": "5c7942a4b9a5f2740fcc5cc734877955",
+    "revision": "7a9a291dd7e0e73d15fd92c7e96f1fb0",
     "url": "/unsplash-app/index.html"
   }
 ];
