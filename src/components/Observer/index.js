@@ -1,6 +1,6 @@
 import React from 'react';
 
-class TestComponent extends React.Component {
+class Observer extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -45,4 +45,4 @@ class TestComponent extends React.Component {
   }
 }
   
-export default TestComponent;
+export default Observer;

@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import { Card } from '../';
+import { Card } from '..';
 import config from '../../config/constants'
 
 
@@ -19,7 +19,7 @@ class Gallery extends React.PureComponent{
   }
   
   render(){
-    // console.log('Galery -> Render');
+    console.log('Galery -> Render');
     this.formatPhotos(); 
     return (
       <div className="gallery">

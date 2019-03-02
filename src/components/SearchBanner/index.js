@@ -1,22 +1,28 @@
 import React from 'react';
 import './style.scss';
-import {SearchInput} from '../'
 
-class SearchBanner extends React.Component {
+// Component
+import { SearchInput } from '../'
+
+// Services
+import unsplashService from '../../service/unsplash-service';
+
+class SearchBanner extends React.PureComponent {
   constructor(){
     super();
-    this.state ={}
+    this.state = {
+      photo: null
+    };
   }
-  shouldComponentUpdate(nextProps, nextState){
-    // console.log('Banner Props->', nextProps);
-    return true;
-  }
+ 
   componentDidMount(){
-    // console.log('Banner Props->', this.props.data);
+    unsplashService.getRandomPhoto().then(photo => {
+      this.setState({ photo: photo });
+    })
   }
   render(){
     // console.log('Banner -> Render');
-    const bg = {backgroundImage: !!this.props.data ? `url(${this.props.data.urls.full})`: ''}
+    const bg = {backgroundImage: !!this.state.photo ? `url(${this.state.photo.urls.full})`: ''}
     return (
       <div className="search-banner" style={bg}>
         <div className="search-banner__content">

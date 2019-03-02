@@ -1,93 +1,91 @@
-import React from 'react';
 
+
+// Dependencies
+import React from 'react';
+import debounce from 'lodash/debounce';
+import { connect } from 'react-redux';
+
+// Services
 import unsplashService from '../../service/unsplash-service';
+
+
+// Components
 import { Gallery, EllipsisLoader, SearchBanner } from '../../components';
-import { debounce } from '../../utils';
+
+
+// Style
 import './style.scss';
+
+
+// Redux 
+import { loadPhotos, changeDimension, clearPhotos } from './actions';
+
 
 class HomePage extends React.PureComponent {
   constructor(){
     super();
-    this.state = {
-      banner: null,
-      hasBanner: false,
-      photos: [],
-      col: 3
-    }
-    
+
     // Helpers
-    this.prevY = 0;
-    this.page = 0;
     this.breakPoints = {
       sm: 480,
       md: 935,
       lg: 1321
     };
 
-    this.setInitialState = this.setInitialState.bind(this);
+    this.colSet = false;
+
     this.setupObserver = this.setupObserver.bind(this);
     this.handleObeserver = this.handleObeserver.bind(this);
     this.getPhotos = this.getPhotos.bind(this);
-    this.updateDimension = debounce(this.updateDimension.bind(this), 500)
+    this.updateDimension = this.updateDimension.bind(this);
+    this.onResize = debounce(this.onResize.bind(this), 500);
   }
   
 
   // ******** LIFECYCLE METHODS *********** //
 
   componentDidMount(){
-    this.setInitialState(); // Set Initial state at once to minimize render to be called
+    this.updateDimension(); 
+    this.getPhotos(); 
     this.setupObserver();
-    window.addEventListener('resize', this.updateDimension);
+    window.addEventListener('resize', this.onResize);
   }
 
   componentWillUnmount(){
-    // Remove Listeners
-    window.removeEventListener('resize', this.updateDimension);
+    window.removeEventListener('resize', this.onResize);
   }
 
   render() {
-    // console.log('Home -> Render');
+    // console.log('Home Render');
     return (
       <React.Fragment>
-        { 
-          this.state.banner && 
-          <SearchBanner data={this.state.banner}
-        />}
-      <div className="container"> 
-        { 
-          (this.state.photos.length > 0 && this.state.banner) && 
-          <Gallery photos={this.state.photos} col={this.state.col}/> 
-        }
-        <div id="observer-target">
-          <EllipsisLoader show/>
+        <SearchBanner/>
+        <div className="container"> 
+            { 
+              (this.props.photos.length > 0  && this.colSet) &&
+              <Gallery photos={this.props.photos} col={this.props.col}/> 
+            }
+            <div id="observer-target">
+              <EllipsisLoader show/>
+            </div>
         </div>
-      </div>
       </React.Fragment>
     );
   }
 
   // ******** CUSTOM METHODS *********** //
-  
-  setInitialState(){
-    const p = Promise.all([
-      unsplashService.getRandomPhoto(),
-      unsplashService.getAllPhoto(0)
-    ])
-    p.then(res => {
-      const d = this.getDimension();
-      this.setState(
-        { banner: res[0], 
-          photos: res[1],
-          hasBanner: true,
-          ...d
-        });
-    });
+
+
+  updateDimension(cb){
+    const d = this.getDimension();
+    this.props.changeDimension(changeDimension(d));
+    this.colSet = true;
   }
 
-
-  updateDimension(e){
-    const d = this.getDimension();
-    this.setState(d);
+  onResize(){
+    this.updateDimension();
+    this.props.clearPhotos(clearPhotos());
+    this.getPhotos();
   }
 
   setupObserver(){
@@ -102,48 +100,55 @@ class HomePage extends React.PureComponent {
   }
 
   handleObeserver(entities, observe){
-    // const y = entities[0].boundingClientRect.y;
-    
-    // if (this.prevY > y) {
-    if(entities[0].isIntersecting){
-      this.page = this.page + 1;
-      this.getPhotos(this.page);
-      console.log('GET!!!!', this.page);
+    const x = entities[0].intersectionRect.x;
+    // (x === 0) Prevents initial intersection, when the page load
+    if(entities[0].isIntersecting && x === 0){
+      this.getPhotos();
     }
-    // }
-    // this.prevY = y;
   }
 
-  getPhotos(page){
+  getPhotos(){
+    let page = this.props.page;
     unsplashService.getAllPhoto(page).then(data => {
       const temp = data.map(p => Object.assign({}, p, {id:`page${page}-${p.id}`}));
-      this.setState({ photos: [...this.state.photos, ...temp] });
+      const photos = [...this.props.photos, ...temp];
+      // Update Store
+      page++;
+      this.props.loadPhotos(loadPhotos(photos, page));
     });
   }
 
+
+  // TODO improve this!!!
   getDimension(){
-    if(window.innerWidth <= this.breakPoints.lg){
-      if(window.innerWidth <= this.breakPoints.md) {
-        if(window.innerWidth <= this.breakPoints.sm){
-          console.log('SMALL -> 1 COL', window.innerWidth);
-          // alert('SMALL -> 1 COL:' + window.innerWidth);
-          return { col: 1 };
-        }else{
-          console.log('MID -> 1 COL', window.innerWidth);
-          // alert('SMALL -> 1 COL: ' + window.innerWidth);
-          return { col: 1 };
-        }
+    const d = { col: 3, viewWidth: window.innerWidth };
+    if(d.viewWidth <= this.breakPoints.lg){
+      if(d.viewWidth <= this.breakPoints.md) {
+        d.viewWidth <= this.breakPoints.sm ? d.col = 1 : d.col = 1;
       }else{
-        console.log('LG -> 2 COL',window.innerWidth);
-        // alert('SMALL -> 1 COL: '+ window.innerWidth);
-        return { col: 2 };
+        d.col = 2
       }
     }else{
-      console.log('DEFAULT -> 3 COL',window.innerWidth);
-      // alert('SMALL -> 1 COL: '+ window.innerWidth);
-      return { col: 3 };
+      d.col = 3
     }
+    return d;
   }
-
 }
-export default HomePage;
+
+
+const mapStateToProps = (storeState, ownProps) => {
+  // console.log(storeState);
+  return({
+    ...storeState
+  });
+}
+
+const mapDispatchToProps = dispatch => {
+  return({
+    clearPhotos: action => dispatch(action),
+    loadPhotos: action => dispatch(action),
+    changeDimension: action => dispatch(action)
+  });
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

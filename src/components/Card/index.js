@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.scss';
-import config from '../../config/constants'
+import config from '../../config/constants';
 
 /**
  * @props data {Object} Photo details
@@ -35,7 +35,7 @@ class Card extends React.PureComponent {
     const c = this.state.card;
     const imgStyle = {
       backgroundColor: c.color, 
-      minWidth: `${this.state.size}px`, 
+      minWidth: `100%`, 
       minHeight: (c.height/(c.width/this.state.size))
     }
 
@@ -84,7 +84,10 @@ class Card extends React.PureComponent {
   // ******** CUSTOM METHODS *********** //
 
   handleObeserver(entities, observe){
+
     entities.forEach(e => {
+      // console.log(e.isIntersecting);
+      // console.log(this.state.card);
       if(e.isIntersecting){
         this.imgEl.src = this.state.card.urls[this.props.size];
         this.observer.unobserve(this.imgEl); // Unsubscribe!! unless will gonna duplicate image call
@@ -98,5 +101,5 @@ class Card extends React.PureComponent {
     });
   }
 };
-  
+
 export default Card;

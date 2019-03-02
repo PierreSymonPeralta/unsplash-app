@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TestComponent from '../../components/TestComponent';
+import Observer from '../../components/Observer';
 
 class AboutPage extends Component {
   constructor(){
@@ -36,7 +36,7 @@ class AboutPage extends Component {
     console.log('Page -> Render');
     return (
       <div className="container"> 
-        <TestComponent data={this.state.name} />
+        <Observer data={this.state.name} />
         <button onClick={this.setName.bind(this)}>Set Name</button>
         <button onClick={this.setOthers.bind(this)}>Set Other</button>
       </div>
