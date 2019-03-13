@@ -12,15 +12,24 @@ const unsplashService = {
     }).then(addMobileSize);
   },
 
-  searchPhoto: (query = '') => {
-    const url = config.unsplashAPI + `/search/photos?client_id=${ACCESS_KEY}&query=${query}`;
+  searchPhoto: (query = '', page = 0) => {
+    const url = config.unsplashAPI + `/search/photos?client_id=${ACCESS_KEY}&query=${query}&page=${page}&per_page=30`;
     return fetch(url).then(res => {
       return res.json();
-    }).then(addMobileSize);
+    })
+    .then(d => d.results)
+    .then(addMobileSize);
   },
 
   getRandomPhoto: () => {
     const url = config.unsplashAPI + `/photos/random?client_id=${ACCESS_KEY}`;
+    return fetch(url).then(res => {
+      return res.json();
+    });
+  },
+
+  getUserProfile: (username) => {
+    const url = config.unsplashAPI + `/users/${username}?client_id=${ACCESS_KEY}`;
     return fetch(url).then(res => {
       return res.json();
     });

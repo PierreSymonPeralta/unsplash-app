@@ -1,0 +1,72 @@
+@import '../../style/shared';
+
+
+.user-banner{
+  position: relative;
+  width: 100%;
+  height: 400px;
+  // background-color: antiquewhite;
+
+  display: flex;
+  justify-content: center;
+
+  .user-photo{
+    @extend %flex-center;
+    z-index: 1;
+    img{
+      border-radius: 50%;
+    }
+  }
+  .user-details{
+    padding-left: 20px;
+    .photo-details{
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 200px;
+      color: $white;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-left: 7em;
+      & > div{
+        margin: 0 3em;
+      }
+      h1{
+        color: $white;
+      }
+      span{
+        font-size: 0.7em;
+      }
+    }
+
+    .user-profile{
+      padding-top: 210px;
+      & > div{
+        width: 500px;
+        line-height: 1.5em;
+      }
+    }
+  }
+
+  .pill{
+    display: inline-block;
+    font-size: 0.8em;
+    border-radius: 3px;
+    padding: 0.5em;
+    // box-shadow: 0 2px 10px rgba(0,0,0,.15);
+    background-color: $lightbrown;
+    color: $lightgray;
+    margin-left: 0.5em;
+    cursor: pointer;
+  }
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+}

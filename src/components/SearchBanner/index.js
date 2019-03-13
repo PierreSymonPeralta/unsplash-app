@@ -21,7 +21,6 @@ class SearchBanner extends React.PureComponent {
     })
   }
   render(){
-    // console.log('Banner -> Render');
     const bg = {backgroundImage: !!this.state.photo ? `url(${this.state.photo.urls.full})`: ''}
     return (
       <div className="search-banner" style={bg}>

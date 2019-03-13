@@ -5,6 +5,7 @@ import Card from './Card';
 import Gallery from './Gallery';
 import EllipsisLoader from './EllipsisLoader';
 import SearchBanner from './SearchBanner';
+import UserBanner from './UserBanner';
 import SearchInput from './SearchInput';
 
 export {
@@ -15,5 +16,6 @@ export {
   Gallery,
   EllipsisLoader,
   SearchBanner,
-  SearchInput
+  SearchInput,
+  UserBanner
 }

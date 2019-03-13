@@ -1,4 +1,11 @@
 
+$bgwhite: #e4e4e4;
+$white: #ffffff;
+$gray: #888888;
+$lightbrown: #bfbfbf;
+$lightgray: #656565;
+$darkgray: #2b2a2a;
+
 body {
   margin: 0;
   padding: 0;
@@ -15,9 +22,35 @@ code {
     monospace;
 }
 
-$bgwhite: #e4e4e4;
-$white: #ffffff;
-$gray: #888888;
-$lightbrown: #bfbfbf;
-$lightgray: #656565;
-$darkgray: #2b2a2a;
+
+a{
+  text-decoration: none;
+  color: $darkgray;
+  cursor: pointer;
+  &:hover{
+    color: $lightgray;
+  }
+}
+
+h1,h2,h3{
+  padding: 0;
+  margin: 0;
+}
+
+.small {
+  font-size: 0.8em;
+  color: $darkgray;
+}
+
+%reset{
+  padding: 0;
+  margin: 0;
+}
+
+%flex-center {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

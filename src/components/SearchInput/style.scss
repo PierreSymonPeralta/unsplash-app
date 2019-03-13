@@ -22,21 +22,37 @@
     background: transparent;
     cursor: pointer;
     fill: $gray;
+    float: left;
+    transition: transform 0.2s cubic-bezier(0, 0, 0.3, 1);
+    &:focus{
+      outline: none;
+    }
+    &:hover{
+      fill: $darkgray;
+    }
   }
-  button:focus{
-    outline: none;
+  .search-icon{
+    order: 1;
   }
-  button:hover{
-    fill: $darkgray;
-  }
-  input{
-    width: 90%;
-  }
-  input:focus{
-    outline: none;
-  }
-}
 
+  .clear-icon{
+    order: 3;
+  }
+
+  input{
+    order: 2;
+    width: 90%;
+    transition: font-size 0.2s cubic-bezier(0, 0, 0.3, 1);
+    &:focus{
+      outline: none;
+      font-size: 120%;
+    }
+    &:focus + button{
+      transform: scale(0.6);
+    }
+  }
+  
+}
 
 /* 
   ##Device = Most of the Smartphones Mobiles (Portrait)

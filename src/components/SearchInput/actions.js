@@ -5,6 +5,18 @@ const setFilter = (query) => {
   }
 }
 
+const loadPhotos = (photos, page) => {
+  return {
+    type: 'LOAD_PHOTOS',
+    payload: {
+      photos: photos,
+      page: page
+    }
+  }
+}
+
+
 export {
-  setFilter
+  setFilter,
+  loadPhotos
 }

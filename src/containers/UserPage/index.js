@@ -1,34 +1,38 @@
-import React, { Component } from 'react'
-import userService from '../../service/user-service'
-import { UserInfo, Dialog } from '../../components'
+import React, { Component } from 'react';
+
+// Service
+import unsplashService from '../../service/unsplash-service';
+
+// Components
+import { UserBanner } from '../../components'
 
 class UserPage extends Component {
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state = {
-      users: [],
-      openDialog: false
+      tick: 0
     }
-    this.handleUserClickInfo = this.handleUserClickInfo.bind(this);
   }
 
   // ******** LIFECYCLE METHODS *********** //
 
   componentDidMount(){
-    userService.getAllUser().then(users => {
-      this.setState({ users: users});
+    const userName = this.props.match.params.username || '';
+    unsplashService.getUserProfile(userName).then(user => {
+      this.setState({user});
     });
+    setInterval(() => {
+      this.setState({
+        tick: 1
+      });
+    }, 2000);
   }
   
   render() {
     return (
       <div className="container"> 
-        <Dialog open={this.state.openDialog}/>
-        { this.state.users.length > 0 &&
-          this.state.users.map(user=> {
-              return <UserInfo key={user.id} user={user} onClick={this.handleUserClickInfo.bind(this, user)}/>
-            }
-          )
+        { !!this.state.user &&
+          <UserBanner data={this.state.user}/>
         }
       </div>
     );
@@ -36,11 +40,6 @@ class UserPage extends Component {
 
   // ******** CUSTOM METHODS *********** //
 
-  handleUserClickInfo(userObj){
-    console.log(userObj);
-    this.setState({
-      openDialog: !this.state.openDialog
-    });
-  }
+
 }
 export default UserPage;

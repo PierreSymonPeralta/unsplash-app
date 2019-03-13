@@ -34,6 +34,7 @@ class HomePage extends React.PureComponent {
 
     this.colSet = false;
 
+
     this.setupObserver = this.setupObserver.bind(this);
     this.handleObeserver = this.handleObeserver.bind(this);
     this.getPhotos = this.getPhotos.bind(this);
@@ -76,7 +77,7 @@ class HomePage extends React.PureComponent {
   // ******** CUSTOM METHODS *********** //
 
 
-  updateDimension(cb){
+  updateDimension(){
     const d = this.getDimension();
     this.props.changeDimension(changeDimension(d));
     this.colSet = true;
@@ -109,13 +110,23 @@ class HomePage extends React.PureComponent {
 
   getPhotos(){
     let page = this.props.page;
-    unsplashService.getAllPhoto(page).then(data => {
-      const temp = data.map(p => Object.assign({}, p, {id:`page${page}-${p.id}`}));
-      const photos = [...this.props.photos, ...temp];
-      // Update Store
-      page++;
-      this.props.loadPhotos(loadPhotos(photos, page));
-    });
+    if(!!this.props.query){
+      unsplashService.searchPhoto(this.props.query, page).then(data => {
+        const temp = data.map(p => Object.assign({}, p, {id:`page${page}-${p.id}`}));
+        const photos = [...this.props.photos, ...temp];
+        // Update Store
+        page++;
+        this.props.loadPhotos(loadPhotos(photos, page));
+      });
+    }else{
+      unsplashService.getAllPhoto(page).then(data => {
+        const temp = data.map(p => Object.assign({}, p, {id:`page${page}-${p.id}`}));
+        const photos = [...this.props.photos, ...temp];
+        // Update Store
+        page++;
+        this.props.loadPhotos(loadPhotos(photos, page));
+      });
+    }
   }
 
 
@@ -137,7 +148,7 @@ class HomePage extends React.PureComponent {
 
 
 const mapStateToProps = (storeState, ownProps) => {
-  // console.log(storeState);
+  // fetch here
   return({
     ...storeState
   });

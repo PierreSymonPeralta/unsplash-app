@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './style.scss';
 import config from '../../config/constants';
 
@@ -43,11 +44,13 @@ class Card extends React.PureComponent {
       return (
         <div className="card card--mobile" onClick={this.toogleOverlay}>
           <span className="user">
-            <img src={c.user['profile_image'].small} alt={c.user.username}/>
-            <div className="user__details">
-              <span>{c.user.name}</span>
-              { c.user.location && <span>{c.user.location}</span>}
-            </div>
+          
+              <img src={c.user['profile_image'].small} alt={c.user.username}/>
+              <div className="user__details">
+                <span>{c.user.name}</span>
+                { c.user.location && <span>{c.user.location}</span>}
+              </div>
+            
           </span>
           <img src='' alt='' style={imgStyle} ref={(el) => this.imgEl = el }/>
           <div className="card__overlay" style={showOverlay}>
@@ -57,7 +60,6 @@ class Card extends React.PureComponent {
         </div>
         )
     }else{
-      
       return (
         <div className="card" onMouseEnter={this.toogleOverlay} onMouseLeave={this.toogleOverlay} >
           <img src='' alt="" style={imgStyle} ref={(el) => this.imgEl = el }/>
@@ -69,7 +71,9 @@ class Card extends React.PureComponent {
               </div>
               <div className="bottom__section">
                 <span className="user">
-                  <img src={c.user['profile_image'].small} alt={c.user.username} />
+                  <Link to={`/users/${c.user.username}`}>
+                    <img src={c.user['profile_image'].small} alt={c.user.username} />
+                  </Link>
                   <span>{c.user.name}</span>
                 </span>
               </div>

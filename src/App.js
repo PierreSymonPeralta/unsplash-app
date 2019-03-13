@@ -16,7 +16,7 @@ const App =  () => (
         <NavBar/>
         <div className="AppPage">
           <Route path="/" exact component={HomePage} />
-          <Route path="/users/" component={UserPage} />
+          <Route path="/users/:username" component={UserPage} />
           <Route path="/about/" component={AboutPage} />
         </div>
       </div>
