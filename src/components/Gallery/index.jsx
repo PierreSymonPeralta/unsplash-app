@@ -5,11 +5,12 @@ import config from '../../config/constants'
 
 
 /**
- * @props photos {Array}   Array of photo objects
+ * @props photos {Array}   Array of photos
  * @props col    {Number}  Number of columns to be rendered
  */
+
 class Gallery extends React.PureComponent{
-  constructor(props){
+  constructor(){
     super();
     this.state = {
       loading: false,

@@ -33,6 +33,13 @@ const unsplashService = {
     return fetch(url).then(res => {
       return res.json();
     });
+  },
+
+  getPhotosByUser: (username, page = 0) => {
+    const url = config.unsplashAPI + `/users/${username}/photos?client_id=${ACCESS_KEY}&page=${page}&per_page=30`;
+    return fetch(url).then(res => {
+      return res.json();
+    }).then(addMobileSize);
   }
 
 }

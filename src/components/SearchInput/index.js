@@ -65,8 +65,9 @@ class SearchInput extends React.PureComponent {
 
 
 const mapStateToProps = (state) =>{
+  const homePageState = state.homeReducer;
   return ({
-    query: state.query
+    query: homePageState.query
   });
 }
 

@@ -34,7 +34,6 @@ class HomePage extends React.PureComponent {
 
     this.colSet = false;
 
-
     this.setupObserver = this.setupObserver.bind(this);
     this.handleObeserver = this.handleObeserver.bind(this);
     this.getPhotos = this.getPhotos.bind(this);
@@ -149,8 +148,10 @@ class HomePage extends React.PureComponent {
 
 const mapStateToProps = (storeState, ownProps) => {
   // fetch here
+  console.log(storeState);
+  const homePageState = storeState.homeReducer;
   return({
-    ...storeState
+    ...homePageState
   });
 }
 
