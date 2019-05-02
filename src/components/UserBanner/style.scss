@@ -1,4 +1,4 @@
-@import '../../style/shared';
+@import '../../styles/shared';
 
 
 .banner{ 
@@ -22,10 +22,9 @@
     display: flex;
     justify-content: center;
     .banner__user__photo{
-      // background-color: brown;
       display: flex;
       align-items: center;
-      justify-content: center;
+      
       img{
         border-radius: 50%;
         border: 5px solid $white;
@@ -42,7 +41,7 @@
         display: flex;
         align-items: flex-end;
         justify-content: space-around;
-        // background-color: pink;
+        
         color: $white;
         
       }
@@ -51,19 +50,19 @@
         display: flex;
         flex-flow: column;
         justify-content: space-evenly;
-        
+        div{
+          padding: 3px;
+        }
         & .name{
           font-size: 1.2em;
           font-weight: bold;
         }
-        & .location{
-          font-size: 0.9em;
-        }
-        & .links{
+        & .location, & .links{
           font-size: 0.9em;
         }
         .tag{
           display: inline-block;
+          font-size: 0.7em;
           padding: 0.5em;
           margin: 0.2rem;
           background-color: $white;
@@ -83,5 +82,28 @@
 */
 
 @media (min-width: 320px) and (max-width: 480px) {
-  
+  .banner__user__details{
+     width: 100% !important;
+     left: 0 !important;
+     flex-flow: column;
+     justify-content: center;
+    .banner__user__photo{
+      flex-flow: row;
+      justify-content: center;
+      align-items: flex-end;
+    }
+    .banner__user__info{
+      align-items: center;
+      &__top {
+        div {
+          display: none;
+        }
+      }
+      &__bottom{
+        div{
+          text-align: center;
+        }
+      }
+    }
+  }
 }

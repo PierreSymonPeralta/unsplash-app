@@ -30,9 +30,7 @@ class UserBanner extends React.PureComponent {
     return (
       <div className="banner">
         <div className="banner__photos" style={threeColumnBg}></div>
-        <div className="banner__whitespace">
-
-        </div>
+        <div className="banner__whitespace"></div>
 
         <div className="banner__user__details">
         
@@ -43,38 +41,18 @@ class UserBanner extends React.PureComponent {
 
           <div className="banner__user__info">
             <div className="banner__user__info__top">
-                <div>
-                  <h1>{u['total_photos']}</h1>
-                  Photo
-                </div>
-                <div>
-                  <h1>{u['total_likes']}</h1>
-                  Like
-                </div>
-                <div>
-                <h1>{u['total_collections']}</h1>
-                  Collection
-                </div>
+                <div><h1>{u['total_photos']}</h1>Photo</div>
+                <div><h1>{u['total_likes']}</h1>Like</div>
+                <div><h1>{u['total_collections']}</h1>Collection</div>
             </div>
             <div className="banner__user__info__bottom">
-                <div className="name">
-                  {u.name}
-                </div>
-                <div className="location">
-                  <img src={locationIco} alt={u.username}/> {u.location}
-                </div>
+                <div className="name">{u.name}</div>
+                <div className="location"><img src={locationIco} alt={u.username}/> {u.location}</div>
                 <div className="links">
-                <b>instagram:</b> {`@${u['username']}`} <br />
-                <b>website:</b> <a rel="noopener noreferrer" target="_blank" href={u['portfolio_url']}>{u['portfolio_url']}</a>
+                  <b>instagram:</b> {`@${u['username']}`} <br />
+                  <b>website:</b> <a rel="noopener noreferrer" target="_blank" href={u['portfolio_url']}>{u['portfolio_url']}</a>
                 </div>
-                {/* TODO create tag component */}
-                <div>
-                  {
-                    custom.map((tag, i) => {
-                      return <span key={i} className="tag">{tag.title}</span>
-                    })
-                  }
-                </div>
+                <div> { custom.map((tag, i) => <span key={i} className="tag">{tag.title}</span>)}</div>
             </div>
           </div>
         </div>

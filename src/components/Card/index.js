@@ -44,13 +44,13 @@ class Card extends React.PureComponent {
       return (
         <div className="card card--mobile" onClick={this.toogleOverlay}>
           <span className="user">
-          
-              <img src={c.user['profile_image'].small} alt={c.user.username}/>
-              <div className="user__details">
-                <span>{c.user.name}</span>
-                { c.user.location && <span>{c.user.location}</span>}
-              </div>
-            
+              <Link to={`/users/${c.user.username}`}>
+                <img src={c.user['profile_image'].small} alt={c.user.username}/>
+                <div className="user__details">
+                  <span>{c.user.name}</span>
+                  { c.user.location && <span>{c.user.location}</span>}
+                </div>
+              </Link>
           </span>
           <img src='' alt='' style={imgStyle} ref={(el) => this.imgEl = el }/>
           <div className="card__overlay" style={showOverlay}>

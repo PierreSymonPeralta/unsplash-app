@@ -1,4 +1,4 @@
-@import '../../style/shared';
+@import '../../styles/shared';
 
 
 .card{
@@ -7,11 +7,13 @@
   position: relative;
   margin: 0.5em;
   .user{
-    display: flex;
-    align-items: center;
-    img{
-      border-radius: 50%;
-      margin-right: 0.5em;
+    a {
+      display: flex;
+      align-items: center;
+      img{
+        border-radius: 50%;
+        margin-right: 0.5em;
+    }
     }
   }
 

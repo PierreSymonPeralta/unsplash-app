@@ -1,0 +1,88 @@
+@mixin text-size-adjust($size) {
+  -webkit-text-size-adjust: $size;
+    -ms-text-size-adjust: $size;
+}
+
+// Curvy edges
+@mixin border-radius($radius) {
+-webkit-border-radius: $radius;
+   -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+        border-radius: $radius;
+     -o-border-radius: $radius;
+}
+
+//appearance
+@mixin appearance($value) {
+  -webkit-appearance: $value;
+      -moz-appearance: $value;
+          appearance: $value;
+}
+
+// Background Size (cover, 100%)
+@mixin bg-size($size) {
+  -webkit-background-size: $size;
+     -moz-background-size: $size;
+       -o-background-size: $size;
+          background-size: $size;
+}
+
+// Box Sizing (border-box, content-box, initial)
+@mixin box-sizing($sizing) {
+  -webkit-box-sizing: $sizing;
+     -moz-box-sizing: $sizing;
+          box-sizing: $sizing;
+}
+
+// Box shadow
+@mixin box-shadow($value) {
+  -webkit-box-shadow: $value;
+     -moz-box-shadow: $value;
+          box-shadow: $value;
+}
+
+// Order of element (which element you want to go first)
+@mixin element-order($value) {
+  -webkit-order: $value;
+          order: $value;
+}
+
+// animation
+@mixin animation($value) {
+  -webkit-animation: $value;
+     -moz-animation: $value;
+      -ms-animation: $value;
+       -o-animation: $value;
+          animation: $value;
+}
+
+//e.g. @include calc(width, "25% - 1em");
+@mixin calc($property, $expression) {
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+
+// Calculate line-height
+@mixin line-height($font-size, $line-height) {
+  line-height:  $line-height / $font-size;
+}
+
+@mixin displayFlex() {
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+
+@mixin displayFlexCenter() {
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+  align-items: center;
+  justify-content: center;
+}
+
+
