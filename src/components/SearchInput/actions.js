@@ -1,13 +1,15 @@
+// Dependent to Home Reducer
+
 const setFilter = (query) => {
   return {
-    type: 'SEARCH',
-    payload: query
+    type: 'HOME_SEARCH',
+    payload: query,
   }
 }
 
 const loadPhotos = (photos, page) => {
   return {
-    type: 'LOAD_PHOTOS',
+    type: 'HOME_LOAD_PHOTOS',
     payload: {
       photos: photos,
       page: page

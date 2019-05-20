@@ -13,14 +13,13 @@ import { UserBanner, Gallery, EllipsisLoader } from '../../components';
 
 
 // Redux 
-import { loadPhotos, changeDimension, clearPhotos } from './actions';
+import { loadPhotos, changeDimension, clearPhotos, initialState } from './actions';
 
 class UserPage extends Component {
   constructor(){
     super();
     this.state = {
-      user: null,
-      photos: null
+      user: null
     }
     // Helpers
     this.breakPoints = {
@@ -28,7 +27,6 @@ class UserPage extends Component {
       md: 935,
       lg: 1321
     };
-
     this.colSet = false;
 
     this.setupObserver = this.setupObserver.bind(this);
@@ -44,29 +42,27 @@ class UserPage extends Component {
   componentDidMount(){
     const userName = this.props.match.params.username || '';
     this.userName = userName;
-
     this.updateDimension(); 
-    this.getUserData(); 
     this.setupObserver();
+    this.getUserData(); 
     window.addEventListener('resize', this.onResize);
+  }
+
+  componentWillUnmount(){
+    this.props.initialState(initialState());
+    window.removeEventListener('resize', this.onResize);
   }
   
   render() {
-    // console.log('User Page Render');
-    // console.log(this.state);
     return (
       <div className="container"> 
         { !!this.state.user &&
           <UserBanner data={this.state.user}/>
         }
-        
         {
-          this.props.photos.length > 0 &&
-          <Gallery photos={this.props.photos} col={this.props.col}/> 
+          this.props.photos.length > 0 && <Gallery photos={this.props.photos} col={this.props.col}/> 
         }
-        <div id="observer-target">
-          <EllipsisLoader show/>
-        </div>
+        <div id="observer-target"><EllipsisLoader show/></div>
       </div>
     );
   }
@@ -74,16 +70,9 @@ class UserPage extends Component {
   // ******** CUSTOM METHODS *********** //
 
   getUserData(){
-    
-    Promise.all([
-      unsplashService.getUserProfile(this.userName),
-      unsplashService.getPhotosByUser(this.userName)
-    ]).then(res => {
-      const user = res[0];
-      const photos = res[1];
-      this.setState({user, photos});
-      this.props.loadPhotos(loadPhotos(photos, 0));
-      // TODO map to components and implement infinite scrolll
+    unsplashService.getUserProfile(this.userName).then(user => {
+      this.setState({user});
+      this.getPhotos();
     });
   }
 
@@ -99,7 +88,7 @@ class UserPage extends Component {
     this.getPhotos();
   }
 
-  setupObserver(){
+  setupObserver(init){
     const options = {
       root: null,
       rootMargin: '0px',
@@ -114,6 +103,7 @@ class UserPage extends Component {
     const x = entities[0].intersectionRect.x;
     // (x === 0) Prevents initial intersection, when the page load
     if(entities[0].isIntersecting && x === 0){
+      // console.log('Obeserver Fetch')
       this.getPhotos();
     }
   }
@@ -121,11 +111,13 @@ class UserPage extends Component {
   getPhotos(){
     let page = this.props.page;
     unsplashService.getPhotosByUser(this.userName, page).then(data => {
-      const temp = data.map(p => Object.assign({}, p, {id:`page${page}-${p.id}`}));
-      const photos = [...this.props.photos, ...temp];
-      // Update Store
-      page++;
-      this.props.loadPhotos(loadPhotos(photos, page));
+      // check if data has values
+      if (!!data.length) {
+        const temp = data.map(p => Object.assign({}, p, {id:`page${page}-${p.id}`}));
+        const photos = [...this.props.photos, ...temp];
+        page++;
+        this.props.loadPhotos(loadPhotos(photos, page));
+      }
     });
   }
 
@@ -152,8 +144,10 @@ class UserPage extends Component {
 
 const mapStateToProps = (storeState, ownProps) => {
   // fetch here
-  // console.log(storeState.userReducer);
+  // console.log('HOME PHOTOS:', storeState.homeReducer.photos.length);
+  // console.log('USER PHOTOS:', storeState.userReducer.photos.length);
   const userPageState = storeState.userReducer;
+
   return({
     ...userPageState
   });
@@ -163,7 +157,8 @@ const mapDispatchToProps = dispatch => {
   return({
     clearPhotos: action => dispatch(action),
     loadPhotos: action => dispatch(action),
-    changeDimension: action => dispatch(action)
+    changeDimension: action => dispatch(action),
+    initialState: action => dispatch(action)
   });
 }
 

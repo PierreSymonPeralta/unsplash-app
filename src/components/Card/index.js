@@ -73,8 +73,8 @@ class Card extends React.PureComponent {
                 <span className="user">
                   <Link to={`/users/${c.user.username}`}>
                     <img src={c.user['profile_image'].small} alt={c.user.username} />
+                    <span>{c.user.name}</span>
                   </Link>
-                  <span>{c.user.name}</span>
                 </span>
               </div>
             </div>

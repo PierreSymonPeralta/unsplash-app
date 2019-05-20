@@ -1,10 +1,2 @@
 @import '../../styles/styles.scss';
 
-#observer-target{
-  transform: translateY(-2000%); // To trigger observer ealier
-  height: 200px;
-  width: 100%;
-  //background-color: red; // To removed for testing
-  display: flex;
-  justify-content: center;
-}

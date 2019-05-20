@@ -18,14 +18,14 @@ import './style.scss';
 
 
 // Redux 
-import { loadPhotos, changeDimension, clearPhotos } from './actions';
+import { loadPhotos, changeDimension, clearPhotos, initialState } from './actions';
 
 
 class HomePage extends React.PureComponent {
   constructor(){
     super();
 
-    // Helpers
+    // Helper
     this.breakPoints = {
       sm: 480,
       md: 935,
@@ -34,29 +34,29 @@ class HomePage extends React.PureComponent {
 
     this.colSet = false;
 
-    this.setupObserver = this.setupObserver.bind(this);
-    this.handleObeserver = this.handleObeserver.bind(this);
-    this.getPhotos = this.getPhotos.bind(this);
-    this.updateDimension = this.updateDimension.bind(this);
-    this.onResize = debounce(this.onResize.bind(this), 500);
+    this.setupObserver    = this.setupObserver.bind(this);
+    this.handleObeserver  = this.handleObeserver.bind(this);
+    this.getPhotos        = this.getPhotos.bind(this);
+    this.updateDimension  = this.updateDimension.bind(this);
+    this.onResize         = debounce(this.onResize.bind(this), 500);
   }
   
 
   // ******** LIFECYCLE METHODS *********** //
 
   componentDidMount(){
-    this.updateDimension(); 
-    this.getPhotos(); 
+    this.updateDimension();   // Updates the { col, viewWidth } of the store
+    this.getPhotos();         // Updates the { photos, page } of the store
     this.setupObserver();
     window.addEventListener('resize', this.onResize);
   }
 
   componentWillUnmount(){
+    this.props.initialState(initialState());
     window.removeEventListener('resize', this.onResize);
   }
 
   render() {
-    // console.log('Home Render');
     return (
       <React.Fragment>
         <SearchBanner/>
@@ -78,7 +78,7 @@ class HomePage extends React.PureComponent {
 
   updateDimension(){
     const d = this.getDimension();
-    this.props.changeDimension(changeDimension(d));
+    this.props.changeDimension(changeDimension(d)); 
     this.colSet = true;
   }
 
@@ -103,13 +103,15 @@ class HomePage extends React.PureComponent {
     const x = entities[0].intersectionRect.x;
     // (x === 0) Prevents initial intersection, when the page load
     if(entities[0].isIntersecting && x === 0){
+      console.log('Obeserver Fetch')
       this.getPhotos();
     }
   }
 
   getPhotos(){
     let page = this.props.page;
-    if(!!this.props.query){
+    
+    if (!!this.props.query) {
       unsplashService.searchPhoto(this.props.query, page).then(data => {
         const temp = data.map(p => Object.assign({}, p, {id:`page${page}-${p.id}`}));
         const photos = [...this.props.photos, ...temp];
@@ -117,13 +119,13 @@ class HomePage extends React.PureComponent {
         page++;
         this.props.loadPhotos(loadPhotos(photos, page));
       });
-    }else{
+    } else {
       unsplashService.getAllPhoto(page).then(data => {
         const temp = data.map(p => Object.assign({}, p, {id:`page${page}-${p.id}`}));
         const photos = [...this.props.photos, ...temp];
         // Update Store
         page++;
-        this.props.loadPhotos(loadPhotos(photos, page));
+        this.props.loadPhotos(loadPhotos(photos, page)); // Update store
       });
     }
   }
@@ -159,7 +161,8 @@ const mapDispatchToProps = dispatch => {
   return({
     clearPhotos: action => dispatch(action),
     loadPhotos: action => dispatch(action),
-    changeDimension: action => dispatch(action)
+    changeDimension: action => dispatch(action),
+    initialState: action => dispatch(action)
   });
 }
 

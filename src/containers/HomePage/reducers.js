@@ -1,3 +1,12 @@
+import {
+  HOME_CHANGE_DIMENSION,
+  HOME_CLEAR_PHOTOS,
+  HOME_GET_PHOTOS,
+  HOME_LOAD_PHOTOS,
+  HOME_SEARCH,
+  HOME_INITIAL_STATE
+} from './actions';
+
 const initialState = {
   query: '',
   photos: [],
@@ -7,36 +16,39 @@ const initialState = {
 }
 function homeReducer(state = initialState, action) {
   switch (action.type) {
-    case 'SEARCH':
+    case HOME_SEARCH:
       return {
         ...state,
-        query: action.payload
+        query: action.payload,
+        page: 0
       }
-    case 'LOAD_PHOTOS':
+    case HOME_LOAD_PHOTOS:
     const { photos, page } = action.payload;
       return {
         ...state,
         photos: photos,
         page: page
       }
-    case 'GET_PHOTOS':
+    case HOME_GET_PHOTOS:
       return {
         ...state,
         photos: state.photos
       }
-    case 'CLEAR_PHOTOS':
+    case HOME_CLEAR_PHOTOS:
       return {
         ...state,
         photos: [],
         page: 0
       }
-    case 'CHANGE_DIMENSION':
+    case HOME_CHANGE_DIMENSION:
       const { col, viewWidth } = action.payload;
       return {
         ...state,
         col: col,
         viewWidth: viewWidth
       }
+    case HOME_INITIAL_STATE:
+      return initialState;
     default:
       return state
   }
