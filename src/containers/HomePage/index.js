@@ -150,7 +150,8 @@ class HomePage extends React.PureComponent {
 
 const mapStateToProps = (storeState, ownProps) => {
   // fetch here
-  console.log(storeState);
+  // console.log('HOME PHOTOS:', storeState.homeReducer.photos.length);
+  // console.log('USER PHOTOS:', storeState.userReducer.photos.length);
   const homePageState = storeState.homeReducer;
   return({
     ...homePageState

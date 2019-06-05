@@ -14,7 +14,6 @@ import './style.scss';
 class SearchInput extends React.PureComponent {
   constructor(){
     super();
-
     this.onSearchChange = this.onSearchChange.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
   }
@@ -26,9 +25,7 @@ class SearchInput extends React.PureComponent {
   render(){
     return (
       <div className="search-input">
-        
         <input type="text" name="search" id="search" placeholder="Search photo. . ." onChange={debounce(this.onSearchChange, 500)}/>
-
         <button className="search-icon">
           <svg version="1.1" viewBox="0 0 32 32" width="32" height="32" aria-hidden="false">
             <path d="M31 28.64l-7.57-7.57a12.53 12.53 0 1 0-2.36 2.36l7.57 7.57zm-17.5-6a9.17 9.17 0 1 1 6.5-2.64 9.11 9.11 0 0 1-6.5 2.67z"></path>
@@ -47,11 +44,14 @@ class SearchInput extends React.PureComponent {
 
   // ******** CUSTOM METHODS *********** //
 
-  onSearchChange(e){
-    unsplashService.searchPhoto(this.searchInput.value).then(photos => {
-      this.props.loadPhotos(loadPhotos(photos, 0));
-    });
-    this.props.searchAction(setFilter(this.searchInput.value));
+  onSearchChange(){
+    if (this.searchInput.value) {
+      unsplashService.searchPhoto(this.searchInput.value)
+        .then(photos => this.props.loadPhotos(loadPhotos(photos, 0)));
+      this.props.searchAction(setFilter(this.searchInput.value));
+    } else {
+      this.clearSearch();
+    }
   }
 
   clearSearch(){
@@ -64,7 +64,7 @@ class SearchInput extends React.PureComponent {
 };
 
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   const homePageState = state.homeReducer;
   return ({
     query: homePageState.query
